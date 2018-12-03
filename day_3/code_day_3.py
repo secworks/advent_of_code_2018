@@ -35,7 +35,7 @@ def map_claims(claims):
     # Create a suitable fabric filled with zeros.
     fabric = [[0 for x in range(1000)] for y in range(1000)]    
 
-    # Perform all claims on the fabric. 
+    # Map all claims on the fabric. 
     for claim in claims:
         (cid, x_coord, y_coord, x_size, y_size) = claim
         for x in range(x_size):
@@ -56,49 +56,31 @@ def part_one(claims):
             if fabric[x][y] > 1:
                 ctr += 1
     print('Answer to part 1: %d' % ctr)
-
-
-#------------------------------------------------------------------
-#------------------------------------------------------------------
-def find_dimensions(claims):
-    min_x = 1000
-    min_y = 1000
-    max_x = 0
-    max_y = 0
-
-    for claim in claims:
-        (cid, x_coord, y_coord, x_size, y_size) = claim
-
-        if x_coord < min_x:
-            min_x = x_coord
-        if y_coord < min_y:
-            min_y = y_coord
-        if x_coord + x_size > max_x:
-            max_x = x_coord + x_size
-        if y_coord + y_size > max_y:
-            max_y = y_coord + y_size
-
-    print(min_x, min_y, max_x, max_y)
     
         
 #------------------------------------------------------------------
 #------------------------------------------------------------------
 def part_two(claims):
-    # Create a suitable fabric filled with zeros.
+    # Get a fabric with the claims mapped onto the fabric.
     fabric = map_claims(claims)
-        
+    return 0
+    
     # Walk through the claims again to find the claim
     # for which all coordinates are one
     for claim in claims:
-        (cid, x_coord, y_coord, x_size, y_size) = claim
+        cid, x_coord, y_coord, x_size, y_size = claim
+
         if VERBOSE:
             print("\n%d:" % (cid))
+
         non_overlap = True
         cid_found = -2
         for x in range(x_size):
             for y in range(y_size):
+
                 if VERBOSE:
                     print(" %d" % (fabric[x_coord + x][y_coord + y]), end = "")
+
                 if fabric[x_coord + x][y_coord + y] > 1:
                     non_overlap = False
             if non_overlap:
@@ -113,8 +95,8 @@ def part_two(claims):
 #------------------------------------------------------------------
 print('Answers for day 3:')
 my_claims = load_input("puzzle_input_day_3.txt")
-find_dimensions(my_claims)
-# part_one(my_claims)
-# part_two(my_claims)
+# find_dimensions(my_claims)
+part_one(my_claims)
+part_two(my_claims)
 
 #======================================================================
