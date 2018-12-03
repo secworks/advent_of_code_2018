@@ -37,7 +37,7 @@ def map_claims(claims):
 
     # Map all claims on the fabric. 
     for claim in claims:
-        (cid, x_coord, y_coord, x_size, y_size) = claim
+        cid, x_coord, y_coord, x_size, y_size = claim
         for x in range(x_size):
             for y in range(y_size):
                 fabric[x_coord + x][y_coord + y] += 1 
@@ -51,8 +51,8 @@ def part_one(claims):
         
     # Scan the complete fabric after places with multiple claims.
     ctr = 0
-    for x in range(len(fabric)):
-        for y in range(len(fabric[0])):
+    for x in range(1000):
+        for y in range(1000):
             if fabric[x][y] > 1:
                 ctr += 1
     print('Answer to part 1: %d' % ctr)
@@ -63,30 +63,19 @@ def part_one(claims):
 def part_two(claims):
     # Get a fabric with the claims mapped onto the fabric.
     fabric = map_claims(claims)
-    return 0
     
     # Walk through the claims again to find the claim
     # for which all coordinates are one
     for claim in claims:
         cid, x_coord, y_coord, x_size, y_size = claim
-
-        if VERBOSE:
-            print("\n%d:" % (cid))
-
         non_overlap = True
         cid_found = -2
         for x in range(x_size):
             for y in range(y_size):
-
-                if VERBOSE:
-                    print(" %d" % (fabric[x_coord + x][y_coord + y]), end = "")
-
                 if fabric[x_coord + x][y_coord + y] > 1:
                     non_overlap = False
-            if non_overlap:
-                cid_found = cid
-            if VERBOSE:
-                print("")
+        if non_overlap:
+            cid_found = cid
             
     print('Answer to part 2: %d' % cid_found)
 
@@ -95,8 +84,9 @@ def part_two(claims):
 #------------------------------------------------------------------
 print('Answers for day 3:')
 my_claims = load_input("puzzle_input_day_3.txt")
-# find_dimensions(my_claims)
 part_one(my_claims)
+
+my_claims = load_input("puzzle_input_day_3.txt")
 part_two(my_claims)
 
 #======================================================================
