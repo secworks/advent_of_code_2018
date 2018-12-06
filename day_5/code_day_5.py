@@ -27,10 +27,10 @@ def check_pair(s1, s2):
 #------------------------------------------------------------------
 #------------------------------------------------------------------
 def compress(s):
+    print("Length before compress: %d" % (len(s)))
     diff = -1
     while diff != 0:
         curr_len = len(s)
-        print("Current length: %d" % curr_len)
         i = 0
         while i < (len(s) -1):
             if check_pair(s[i], s[i + 1]):
@@ -39,12 +39,26 @@ def compress(s):
             else:
                 i += 1
         diff = len(s) - curr_len
+
+    print("Length after compress: %d" % (len(s)))
     return len(s)
 
 
 #------------------------------------------------------------------
 #------------------------------------------------------------------
+def remove_chars(ch, s):
+    i = 0
+    while i < (len(s) -1):
+        if s[i].upper() == ch.upper():
+            s = s[:i] + s[i + 1:]
+        i += 1
+    return s
+
+
+#------------------------------------------------------------------
+#------------------------------------------------------------------
 def part_one():
+    print("Performing part one.")
     my_input = load_input("puzzle_input_day_5.txt")
     min_size = compress(my_input)
     print("Answer for part one: %d" % min_size)
@@ -54,6 +68,23 @@ def part_one():
 #------------------------------------------------------------------
 #------------------------------------------------------------------
 def part_two():
+    print("Performing part two.")
+    my_input = load_input("puzzle_input_day_5.txt")
+
+    # Build db for all chars in the input
+    chars = {}
+    for ch in my_input:
+        if ch.upper() not in chars:
+            chars[ch.upper()] = 0
+
+    # For each char we generate a new input with the char removed.
+    # Then we compress it and stor the compressed length.
+    for ch in chars:
+        print("Compressing for char %s" % (ch.upper()))
+        new_input = remove_chars(ch, my_input)
+        chars[ch] = compress(new_input)
+
+
     print("Answer for part two:")
 
 
@@ -61,7 +92,7 @@ def part_two():
 #------------------------------------------------------------------
 #------------------------------------------------------------------
 print('Answers for day 5:')
-part_one()
+#part_one()
 part_two()
 
 #======================================================================
