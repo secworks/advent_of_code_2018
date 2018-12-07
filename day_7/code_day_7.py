@@ -19,19 +19,39 @@ def load_input(filename):
 
 #------------------------------------------------------------------
 #------------------------------------------------------------------
+def find_root(parts):
+    dependents = set()
+    for first, second in parts:
+        if second not in dependents: 
+            dependents.add(second)
+    print(dependents)
+
+    for first, second in parts:
+        if first not in dependents:
+            return first
+    
+
+#------------------------------------------------------------------
+#------------------------------------------------------------------
 def part_one():
     print("Performing part one.")
     my_input = load_input("puzzle_input_day_7.txt")
 
-    my_db = {}
+    parts = set()
     for first, second in my_input:
-        if not first in my_db:   
-            my_db[first] = []
-        else:
-            my_db[first].append(second)
-    print(my_db)
+        parts.add(first)
+        parts.add(second)
+    print("All parts:")
+    print(parts)
+
+    root = find_root(my_input)
+    print("root part is: %s" % root)
     
-    print("Answer for part one: ")
+    part_order = root
+    
+    
+    
+    print("Answer for part one: %s" % part_order)
 
 
 #------------------------------------------------------------------
