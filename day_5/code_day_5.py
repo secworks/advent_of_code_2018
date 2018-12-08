@@ -79,13 +79,15 @@ def part_two():
 
     # For each char we generate a new input with the char removed.
     # Then we compress it and stor the compressed length.
+    minlen = len(my_input)
     for ch in chars:
         print("Compressing for char %s" % (ch.upper()))
         new_input = remove_chars(ch, my_input)
         chars[ch] = compress(new_input)
+        if chars[ch] < minlen:
+            minlen = chars[ch]
 
-
-    print("Answer for part two:")
+    print("Answer for part two: %d" % minlen)
 
 
 
