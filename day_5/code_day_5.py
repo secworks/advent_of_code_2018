@@ -48,10 +48,11 @@ def compress(s):
 #------------------------------------------------------------------
 def remove_chars(ch, s):
     i = 0
-    while i < (len(s) -1):
+    while i < len(s):
         if s[i].upper() == ch.upper():
             s = s[:i] + s[i + 1:]
-        i += 1
+        else:
+            i += 1
     return s
 
 
@@ -78,15 +79,16 @@ def part_two():
             chars[ch.upper()] = 0
 
     # For each char we generate a new input with the char removed.
-    # Then we compress it and stor the compressed length.
-    minlen = len(my_input)
+    # Then we compress it and store the compressed length.
+    minlen = 100000
     for ch in chars:
-        print("Compressing for char %s" % (ch.upper()))
+        if VERBOSE:
+            print("Compressing for char %s" % (ch.upper()))
         new_input = remove_chars(ch, my_input)
-        chars[ch] = compress(new_input)
-        if chars[ch] < minlen:
-            minlen = chars[ch]
-
+        complen = compress(new_input)
+        chars[ch] = complen
+        if complen < minlen:
+            minlen = complen
     print("Answer for part two: %d" % minlen)
 
 
@@ -94,7 +96,7 @@ def part_two():
 #------------------------------------------------------------------
 #------------------------------------------------------------------
 print('Answers for day 5:')
-#part_one()
+part_one()
 part_two()
 
 #======================================================================
